@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:20:28 by mea               #+#    #+#             */
-/*   Updated: 2022/06/03 15:16:27 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/03 16:29:52 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	int	nb_of_philos;
+	int	nb_of_philo;
    	int	time_to_die;
 	int	time_to_eat;
 	int time_to_sleep;
@@ -48,7 +48,7 @@ typedef struct s_table
 }				t_table;
 
 t_table parsing(int argc, char **argv);
-void	start_the_party(t_table table);
-void	end_of_the_party(t_table table);
+void	start_the_party(t_table *table);
+void	end_of_the_party(t_table *table);
 
 #endif

@@ -6,11 +6,35 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:58:39 by mea               #+#    #+#             */
-/*   Updated: 2022/06/03 15:57:22 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/03 16:32:42 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "philosopher.h"
+
+void	dinner_time(void *data)
+{
+	t_philo	philo;
+	int		i;
+	
+	philo = *(t_philo*)data;
+	i = 0;
+	while (philo->death != 1)
+	{
+		printf("coucou\n");
+	}
+}
+
+int	init_threads(t_table table, int i)
+{
+	while (i < table.nb_of_philo)
+	{
+		if (pthread_create(&table->philo[i].thread, NULL, dinner_time, &table->philo[i]) != 0)
+			return (printf("Thread creation problem\n"));
+		i++;
+	}
+	return (0);
+}
 
 void	init_forks(t_table table, int i)
 {
@@ -21,7 +45,7 @@ void	init_forks(t_table table, int i)
 	}
 }
 
-void	init_philo(t_table table, int i)
+void	init_philo(t_table *table, int i)
 {
 	t_philo *philo;
 
@@ -45,20 +69,24 @@ void	start_the_party(t_table *table)
 	int		i;
 
 	i = 0;
-	while (i < table->nb_of_philos)
+	while (i < table->nb_of_philo)
 		init_forks(table, i++);
 	i = 0;
-	while (i < table->nb_of_philos)
+	while (i < table->nb_of_philo)
 		init_philo(table, i++);
 	i = 0;
-	while (i < table->nb_of_philos)
+	while (i < table->nb_of_philo)
+	{
+		if(init_threads(table, i++))
+			return (0);
+	}
 		init_threads(table, i++);
 }
 
 int	check_table(t_table *table)
 {
-	if (table->nb_of_philosophers < 2 || \
-	table->nb_of_philosophers > 7)
+	if (table->nb_of_philo < 2 || \
+	table->nb_of_philo > 7)
 		return (printf("Wrong number of philosophers\n"));
 	if (table->time_to_die < 0 || table->time_to_die > 100)
 		return (printf("Wrong time to die\n"));
@@ -76,15 +104,17 @@ int main(int argc, char **argv)
 	table = parsing(argv);
 	if (table != NULL)
 	{
-		start_the_party(&table);
-		end_of_the_party(&table);
+		if (start_the_party(table))
+			return (0);
+		if (end_of_the_party(table))
+			return (0);
 	}
 	return (0);
 }
 
 t_table parsing(int argc, char **argv)
 {
-	t_table table;
+	t_table *table;
 	
 	if (argc < 5)
 		return (printf("Wrong amount of arguments\n"));
@@ -93,7 +123,7 @@ t_table parsing(int argc, char **argv)
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		table->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
+		table->nb_of_meal = ft_atoi(argv[5]);
 	if(check_table(&table))
 		return (NULL);
 	table->philo = (t_philo *)malloc(sizeof(t_philo) * table->number_of_philosophers);
