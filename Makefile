@@ -2,7 +2,7 @@ NAME = philo
 SRCS = main.c
 OBJS = $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
-DEBUG = -g -fsanitize=address -fsanitize=undefined -fsanitize=leak -fsanitize=memory
+DEBUG = -g -fsanitize=address
 
 $(NAME): $(OBJS)
 	gcc $(FLAGS) $(OBJS) $(DEBUG) -o $(NAME)

@@ -6,28 +6,55 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:58:39 by mea               #+#    #+#             */
-/*   Updated: 2022/06/03 16:32:42 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/06 12:13:36 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	dinner_time(void *data)
+int	ft_atoi(const char *str)
+{
+	int	neg;
+	int	i;
+	int	num;
+
+	i = 0;
+	neg = 1;
+	num = 0;
+	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
+		|| str[i] == '\f' || str[i] == '\r')
+		i++;
+	while (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			neg *= -1;
+		i++;
+	}
+	while (str[i] >= 48 && str[i] <= 57)
+	{
+		num = num * 10 + (str[i] - 48);
+		i++;
+	}
+	return (num * neg);
+}
+
+void	*dinner_time(void *data)
 {
 	t_philo	philo;
 	int		i;
 	
 	philo = *(t_philo*)data;
 	i = 0;
-	while (philo->death != 1)
+	while (philo.dead != 1)
 	{
 		printf("coucou\n");
 	}
+	return (NULL);
 }
 
-int	init_threads(t_table table, int i)
+int	init_threads(t_table *table, int i)
 {
-	while (i < table.nb_of_philo)
+	while (i < table->nb_of_philo)
 	{
 		if (pthread_create(&table->philo[i].thread, NULL, dinner_time, &table->philo[i]) != 0)
 			return (printf("Thread creation problem\n"));
@@ -36,11 +63,11 @@ int	init_threads(t_table table, int i)
 	return (0);
 }
 
-void	init_forks(t_table table, int i)
+void	init_forks(t_table *table, int i)
 {
-	while (i < table.nb_of_philo)
+	while (i < table->nb_of_philo)
 	{
-		pthread_mutex_init(table.forks[i], NULL);
+		pthread_mutex_init(table->forks + i, NULL);
 		i++;
 	}
 }
@@ -49,16 +76,16 @@ void	init_philo(t_table *table, int i)
 {
 	t_philo *philo;
 
-	philo = &table.philo[i];
+	philo = table->philo + i;
 	philo->id = i;
 	philo->eating = 0;
 	philo->sleeping = 0;
 	philo->dead = 0;
 	philo->nb_of_meal = 0;
 	philo->last_meal_time = 0;
-	philo->table = &table;
+	philo->table = table;
 	if (i - 1 < 0)
-		philo->left_fork = table->forks + (table->count - 1);
+		philo->left_fork = table->forks + (table->nb_of_philo - 1);
 	else
 		philo->left_fork = table->forks + (i - 1);
 	philo->right_fork = table->forks + i;
@@ -78,7 +105,7 @@ void	start_the_party(t_table *table)
 	while (i < table->nb_of_philo)
 	{
 		if(init_threads(table, i++))
-			return (0);
+			ft_error("Thread creation problem\n" , 1); //free && exit
 	}
 		init_threads(table, i++);
 }
@@ -101,37 +128,30 @@ int main(int argc, char **argv)
 {
 	t_table table;
 
-	table = parsing(argv);
-	if (table != NULL)
-	{
-		if (start_the_party(table))
-			return (0);
-		if (end_of_the_party(table))
-			return (0);
-	}
+	parsing(argc, argv, &table);
+	start_the_party(&table);
+	//end_of_the_party(&table);
 	return (0);
 }
 
-t_table parsing(int argc, char **argv)
+void parsing(int argc, char **argv, t_table *table)
 {
-	t_table *table;
 	
 	if (argc < 5)
-		return (printf("Wrong amount of arguments\n"));
-	table->number_of_philosophers = ft_atoi(argv[1]);
+		return ;
+	table->nb_of_philo = ft_atoi(argv[1]);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		table->nb_of_meal = ft_atoi(argv[5]);
-	if(check_table(&table))
-		return (NULL);
-	table->philo = (t_philo *)malloc(sizeof(t_philo) * table->number_of_philosophers);
+	if(check_table(table))
+		return ;
+	table->philo = (t_philo *)malloc(sizeof(t_philo) * table->nb_of_philo);
 	if (table->philo == NULL)
-		return (NULL);
-	table->forks = malloc(sizeof(pthread_t) * table->number_of_philosophers);
+		return ;
+	table->forks = malloc(sizeof(pthread_mutex_t) * table->nb_of_philo);
 	if (table->forks == NULL)
-		return (NULL);
-	return (table);
+		return ;
 }
 
