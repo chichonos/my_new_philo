@@ -1,41 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/03 13:58:39 by mea               #+#    #+#             */
-/*   Updated: 2022/06/06 13:16:13 by mea              ###   ########.fr       */
+/*   Created: 2022/06/06 13:15:18 by mea               #+#    #+#             */
+/*   Updated: 2022/06/06 13:15:58 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-void	start_the_party(t_table *table)
+int	ft_atoi(const char *str)
 {
-	int		i;
+	int	neg;
+	int	i;
+	int	num;
 
 	i = 0;
-	while (i < table->nb_of_philo)
-		init_forks(table, i++);
-	i = 0;
-	while (i < table->nb_of_philo)
-		init_philo(table, i++);
-	i = 0;
-	while (i < table->nb_of_philo)
-		if(init_threads(table, i++))
-			return ;	
-	return ;
-}
-
-int main(int argc, char **argv)
-{
-	t_table table;
-
-	parsing(argc, argv, &table);
-	start_the_party(&table);
-	//end_of_the_party(&table);
-	return (0);
+	neg = 1;
+	num = 0;
+	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
+		|| str[i] == '\f' || str[i] == '\r')
+		i++;
+	while (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			neg *= -1;
+		i++;
+	}
+	while (str[i] >= 48 && str[i] <= 57)
+	{
+		num = num * 10 + (str[i] - 48);
+		i++;
+	}
+	return (num * neg);
 }
 

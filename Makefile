@@ -1,5 +1,5 @@
 NAME = philo
-SRCS = main.c
+SRCS = main.c init.c dinner.c parsing.c utils.c
 OBJS = $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 DEBUG = -g -fsanitize=address

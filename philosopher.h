@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:20:28 by mea               #+#    #+#             */
-/*   Updated: 2022/06/06 12:10:14 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/06 15:23:10 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_philo
 	int 			sleeping;
 	int				dead;
 	int				nb_of_meal;
-	int 			last_meal_time;
+	long int 			last_meal_time;
 	pthread_t 		thread;
 	pthread_mutex_t *left_fork;
 	pthread_mutex_t *right_fork;
@@ -36,16 +36,39 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	int	nb_of_philo;
-   	int	time_to_die;
-	int	time_to_eat;
-	int time_to_sleep;
-	int	nb_of_meal;
-	t_philo *philo;
+	int				nb_of_philo;
+   	long int		time_to_die;
+	long int		time_to_eat;
+	long int 		time_to_sleep;
+	int				nb_of_meal;
+	t_philo 		*philo;
+	struct timeval	start_time;
+	pthread_mutex_t is_writing;
 	pthread_mutex_t *forks;
 }				t_table;
 
+
+/* --------------- FUNCTIONS ---------------- */
+
+
+//utils.c
+int	ft_atoi(const char *str);
+
+//unit.c
+int		init_threads(t_table *table, int i);
+void	init_forks(t_table *table, int i);
+void	init_philo(t_table *table, int i);
+
+//dinner.c
+void	*dinner_time(void *data);
+void	eating(t_philo *philo);
+void	sleeping(t_philo *philo);
+void	thinking(t_philo *philo);
+
+//parsing.c
 void parsing(int argc, char **argv, t_table *table);
+
+//main.c
 void	start_the_party(t_table *table);
 void	end_of_the_party(t_table *table);
 
