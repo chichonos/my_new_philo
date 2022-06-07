@@ -17,10 +17,11 @@ void	init_threads(t_table *table, int i)
 	pthread_create(&table->philo[i].thread, NULL, dinner_time, &table->philo[i]);
 }
 
-void	init_forks(t_table *table, int i)
+/*void	init_forks(t_table *table, int i)
 {
 		pthread_mutex_init(table->forks + i, NULL);
 }
+*/
 
 void	init_philo(t_table *table, int i)
 {
@@ -53,7 +54,10 @@ void	start_the_party(t_table *table)
 		init_philo(table, i++);
 	i = 0;
 	while (i < table->nb_of_philo)
-		init_threads(table, i++);
+	{
+		pthread_create(&table->philo[i].thread, NULL, dinner_time, &table->philo[i]);
+		i++;
+	}
 	//philo_check_death(table);
 	return ;
 }
