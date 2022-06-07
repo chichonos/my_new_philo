@@ -64,14 +64,16 @@ void	ft_sleep(size_t	usec);
 int		ft_atoi(const char *str);
 void	print_action(long int time, t_philo *philo, char *msg);
 
-//unit.c
-int		init_threads(t_table *table, int i);
+//init.c
+int		init_threads(t_table *table);
 void	init_forks(t_table *table, int i);
 void	init_philo(t_table *table, int i);
+void	philo_check_death(t_table *table);
+size_t	philo_check_eat(t_table *table);
 
 //dinner.c
 
-void	ft_sleep(long int time);
+void	ft_sleep(size_t time);
 void	*dinner_time(void *data);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);

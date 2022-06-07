@@ -53,7 +53,7 @@ size_t	philo_check_eat(t_table *table)
 	i = -1;
 	while (++i < table->nb_of_philo)
 	{
-		if (table->philos[i].nb_of_meal < table->nb_of_meal_min)
+		if (table->philo[i].nb_of_meal < table->nb_of_meal_min)
 			return (0);
 	}
 	return (1);
@@ -64,23 +64,23 @@ void	philo_check_death(t_table *table)
 	size_t	i;
 
 	if (table->nb_of_philo == 1)
-		print_action(get_time_ms_now(), table->philo, "is dead\n");
+		print_action(convert_time_in_ms_from_start(table), table->philo, "is dead\n");
 	while (table->nb_of_philo > 1)
 	{
 		i = -1;
 		while (++i < table->nb_of_philo)
 		{
-			if (table->philos[i].eating == 1)
+			if (table->philo[i].eating == 1)
 				continue ;
-			pthread_mutex_lock(&table->is_diying);
+			pthread_mutex_lock(&table->is_dying);
 			if (get_time_ms_now() - \
-			table->philos[i].last_meal_time >= table->time_to_die)
+			table->philo[i].last_meal_time >= table->time_to_die)
 			{
-				print_action(get_time_ms_now(), table->philos + i, "is dead\n");
+				print_action(convert_time_in_ms_from_start(table), table->philo + i, "is dead\n");
 				table->death = 1;
 				return ;
 			}
-			pthread_mutex_unlock(&table->is_diying);
+			pthread_mutex_unlock(&table->is_dying);
 		}
 		if (philo_check_eat(table))
 			break ;
