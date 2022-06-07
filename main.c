@@ -12,23 +12,6 @@
 
 #include "philosopher.h"
 
-void	start_the_party(t_table *table)
-{
-	int		i;
-
-	i = 0;
-	while (i < table->nb_of_philo)
-		init_forks(table, i++);
-	i = 0;
-	while (i < table->nb_of_philo)
-		init_philo(table, i++);
-	i = 0;
-	while (i < table->nb_of_philo)
-		if(init_threads(table, i++))
-			return ;	
-	return ;
-}
-
 int main(int argc, char **argv)
 {
 	t_table table;

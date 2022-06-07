@@ -14,8 +14,7 @@
 
 int	check_table(t_table *table)
 {
-	if (table->nb_of_philo < 2 || \
-	table->nb_of_philo > 7)
+	/*if (table->nb_of_philo < 2 || table->nb_of_philo > 7)
 		return (printf("Wrong number of philosophers\n"));
 	if (table->time_to_die < 0 || table->time_to_die > 100)
 		return (printf("Wrong time to die\n"));
@@ -23,6 +22,7 @@ int	check_table(t_table *table)
 		return (printf("Wrong time to eat\n"));
 	if (table->time_to_sleep < 0 || table->time_to_sleep > 100)
 		return (printf("Wrong time to sleep\n"));
+	*/
 	return (0);
 }
 
@@ -45,6 +45,9 @@ void parsing(int argc, char **argv, t_table *table)
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->nb_of_philo);
 	if (table->forks == NULL)
 		return ;
+	table->death = 0;
+	table->start_time = get_time_ms_now();
+	pthread_mutex_init(&table->is_dying);
 	pthread_mutex_init(&table->is_writing, NULL);
 }
 

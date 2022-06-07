@@ -51,3 +51,21 @@ void	init_philo(t_table *table, int i)
 		philo->left_fork = table->forks + (i - 1);
 	philo->right_fork = table->forks + i;
 }
+
+void	start_the_party(t_table *table)
+{
+	int		i;
+
+	i = 0;
+	while (i < table->nb_of_philo)
+		init_forks(table, i++);
+	i = 0;
+	while (i < table->nb_of_philo)
+		init_philo(table, i++);
+	i = 0;
+	while (i < table->nb_of_philo)
+		if(init_threads(table, i++))
+			return ;
+	philo_check_death(table);
+	return ;
+}

@@ -27,7 +27,7 @@ typedef struct s_philo
 	int 			sleeping;
 	int				dead;
 	int				nb_of_meal;
-	long int 			last_meal_time;
+	long int 		last_meal_time;
 	pthread_t 		thread;
 	pthread_mutex_t *left_fork;
 	pthread_mutex_t *right_fork;
@@ -40,19 +40,29 @@ typedef struct s_table
    	long int		time_to_die;
 	long int		time_to_eat;
 	long int 		time_to_sleep;
-	int				nb_of_meal;
+	int				nb_of_meal_min;
+	int				death;
 	t_philo 		*philo;
-	struct timeval	start_time;
+	size_t			start_time;
 	pthread_mutex_t is_writing;
+	pthread_mutex_t is_dying;
 	pthread_mutex_t *forks;
 }				t_table;
 
 
 /* --------------- FUNCTIONS ---------------- */
 
+//time.c
+
+struct timeval	get_time_now(void);
+size_t	convert_time_in_ms(struct timeval time);
+size_t	get_time_ms_now(void);
+size_t	convert_time_in_ms_from_start(t_table *table);
+void	ft_sleep(size_t	usec);
 
 //utils.c
-int	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
+void	print_action(long int time, t_philo *philo, char *msg);
 
 //unit.c
 int		init_threads(t_table *table, int i);
@@ -60,6 +70,8 @@ void	init_forks(t_table *table, int i);
 void	init_philo(t_table *table, int i);
 
 //dinner.c
+
+void	ft_sleep(long int time);
 void	*dinner_time(void *data);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
