@@ -12,34 +12,14 @@
 
 #include "philosopher.h"
 
-int	init_threads(t_table *table)
+void	init_threads(t_table *table, int i)
 {
-	int i;
-
-	i = 0;
-	while (i < table->nb_of_philo)
-	{
-		if (pthread_create(&table->philo[i].thread, NULL, dinner_time, &table->philo[i]) != 0)
-			return (printf("Thread creation problem\n"));
-		i += 2;
-	}
-	i = 1;
-	while (i < table->nb_of_philo)
-	{
-		if (pthread_create(&table->philo[i].thread, NULL, dinner_time, &table->philo[i]) != 0)
-			return (printf("Thread creation problem\n"));
-		i += 2;
-	}
-	return (0);
+	pthread_create(&table->philo[i].thread, NULL, dinner_time, &table->philo[i]);
 }
 
 void	init_forks(t_table *table, int i)
 {
-	while (i < table->nb_of_philo)
-	{
 		pthread_mutex_init(table->forks + i, NULL);
-		i++;
-	}
 }
 
 void	init_philo(t_table *table, int i)
@@ -54,10 +34,10 @@ void	init_philo(t_table *table, int i)
 	philo->nb_of_meal = 0;
 	philo->last_meal_time = 0;
 	philo->table = table;
-	if (i == table->nb_of_philo - 1)
-		philo->right_fork = table->forks;
+	if (i == 0)
+		philo->left_fork = table->forks + (table->nb_of_philo - 1);
 	else
-		philo->right_fork = table->forks + (i + 1);
+		philo->left_fork = table->forks + (i - 1);
 	philo->right_fork = table->forks + i;
 }
 
@@ -67,14 +47,13 @@ void	start_the_party(t_table *table)
 
 	i = 0;
 	while (i < table->nb_of_philo)
-		init_forks(table, i++);
+		pthread_mutex_init(table->forks + (i++), NULL);
 	i = 0;
 	while (i < table->nb_of_philo)
 		init_philo(table, i++);
 	i = 0;
 	while (i < table->nb_of_philo)
-		if(init_threads(table))
-			return ;
-	philo_check_death(table);
+		init_threads(table, i++);
+	//philo_check_death(table);
 	return ;
 }

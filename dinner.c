@@ -48,7 +48,9 @@ void	eating(t_philo	*philo)
 	philo->last_meal_time = convert_time_in_ms_from_start(philo->table);
 	philo->eating = 0;
 	pthread_mutex_unlock(philo->left_fork);
+	printf("Fork %d released\n", philo->id);
 	pthread_mutex_unlock(philo->right_fork);
+	printf("Fork %d released\n", philo->id + 1);
 }
 
 void	*dinner_time(void *data)
@@ -58,9 +60,9 @@ void	*dinner_time(void *data)
 	
 	philo = *(t_philo*)data;
 	i = 0;
-	if (philo.table->nb_of_philo == 1)
-		usleep(10);
-	while (philo.table->death != 1)
+	if (philo.id % 2 == 0)
+		ft_sleep(10);
+	while (1)
 	{
 		eating(&philo);
 		sleeping(&philo);

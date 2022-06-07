@@ -41,5 +41,5 @@ void	ft_sleep(size_t usec)
 
 	current = get_time_ms_now();
 	while (usec > get_time_ms_now() - current)
-		usleep(usec * 10);
+		usleep(usec * 1000);
 }

@@ -65,11 +65,11 @@ int		ft_atoi(const char *str);
 void	print_action(long int time, t_philo *philo, char *msg);
 
 //init.c
-int		init_threads(t_table *table);
+void	init_threads(t_table *table, int i);
 void	init_forks(t_table *table, int i);
 void	init_philo(t_table *table, int i);
 void	philo_check_death(t_table *table);
-size_t	philo_check_eat(t_table *table);
+int		philo_check_eat(t_table *table);
 
 //dinner.c
 

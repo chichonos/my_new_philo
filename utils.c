@@ -44,9 +44,9 @@ void	print_action(long int time, t_philo *philo, char *msg)
 		printf("%zu ms: Philosopher %d %s\n", time, philo->id, msg);
 }
 
-size_t	philo_check_eat(t_table *table)
+int		philo_check_eat(t_table *table)
 {
-	size_t	i;
+	int	i;
 
 	if (table->nb_of_meal_min < 0)
 		return (0);
@@ -63,8 +63,8 @@ void	philo_check_death(t_table *table)
 {
 	size_t	i;
 
-	if (table->nb_of_philo == 1)
-		print_action(convert_time_in_ms_from_start(table), table->philo, "is dead\n");
+	//if (table->nb_of_philo == 1)
+	//	print_action(convert_time_in_ms_from_start(table), table->philo, "is dead\n");
 	while (table->nb_of_philo > 1)
 	{
 		i = -1;
@@ -85,5 +85,4 @@ void	philo_check_death(t_table *table)
 		if (philo_check_eat(table))
 			break ;
 	}
-	table->death = 1;
 }
