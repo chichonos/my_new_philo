@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:15:18 by mea               #+#    #+#             */
-/*   Updated: 2022/06/08 13:58:25 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/08 14:25:47 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_action(long int time, t_philo *philo, char *msg)
 	pthread_mutex_unlock(&philo->table->is_writing);
 }
 
-int		philo_check_eat(t_table *table)
+int		meal_checker(t_table *table)
 {
 	int	i;
 
@@ -61,12 +61,16 @@ int		philo_check_eat(t_table *table)
 	return (1);
 }
 
-void	philo_check_death(t_table *table)
+void	death_checker(t_table *table)
 {
 	size_t	i;
 
-	//if (table->nb_of_philo == 1)
-	//	print_action(convert_time_in_ms_from_start(table), table->philo, "is dead\n");
+	if (table->nb_of_philo == 1)
+	{
+		print_action(convert_time_in_ms_from_start(table), table->philo, "is dead\n");
+		table->death = 1;
+		return ;
+	}
 	while (table->nb_of_philo > 1)
 	{
 		i = -1;
@@ -75,8 +79,7 @@ void	philo_check_death(t_table *table)
 			if (table->philo[i].eating == 1)
 				continue ;
 			pthread_mutex_lock(&table->is_dying);
-			if (actual_time() - \
-			table->philo[i].last_meal_time >= table->time_to_die)
+			if (actual_time() - table->philo[i].last_meal_time >= table->time_to_die)
 			{
 				print_action(convert_time_in_ms_from_start(table), table->philo + i, "is dead\n");
 				table->death = 1;
@@ -84,7 +87,7 @@ void	philo_check_death(t_table *table)
 			}
 			pthread_mutex_unlock(&table->is_dying);
 		}
-		if (philo_check_eat(table))
+		if (meal_checker(table))
 			break ;
 	}
 }

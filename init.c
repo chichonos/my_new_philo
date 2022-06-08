@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:11:09 by mea               #+#    #+#             */
-/*   Updated: 2022/06/08 14:08:34 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/08 14:25:34 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,6 @@ void	start_the_party(t_table *table)
 		pthread_join(table->philo[i].thread, NULL);
 		i++;
 	}
-	//philo_check_death(table);
+	death_checker(table);
 	return ;
 }

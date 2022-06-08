@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:12:41 by mea               #+#    #+#             */
-/*   Updated: 2022/06/08 14:10:10 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/08 14:13:41 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ void	eating(t_philo	*philo)
 	philo->nb_of_meal++;
 	philo->eating = 0;
 	pthread_mutex_unlock(philo->left_fork);
-	print_action(convert_time_in_ms_from_start(philo->table), philo, "LACHE a fork\n");
 	pthread_mutex_unlock(philo->right_fork);
-	print_action(convert_time_in_ms_from_start(philo->table), philo, "LACHE a fork\n");
 }
 
 void	*dinner_time(void *data)
@@ -50,7 +48,6 @@ void	*dinner_time(void *data)
 	philo = (t_philo *)data;
 	if (philo->id % 2 == 0)
 		ft_sleep(10);
-	printf("Starting while infinite loop\n");
 	while (!philo->table->death)
 	{
 		eating(philo);

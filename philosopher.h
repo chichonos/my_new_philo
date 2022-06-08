@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:20:28 by mea               #+#    #+#             */
-/*   Updated: 2022/06/08 13:59:05 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/08 14:25:19 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	print_action(long int time, t_philo *philo, char *msg);
 void	init_threads(t_table *table, int i);
 void	init_forks(t_table *table, int i);
 void	init_philo(t_table *table, int i);
-void	philo_check_death(t_table *table);
-int		philo_check_eat(t_table *table);
+void	death_checker(t_table *table);
+int		meal_checker(t_table *table);
 
 //dinner.c
 
