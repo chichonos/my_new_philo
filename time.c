@@ -6,40 +6,41 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:20:04 by mea               #+#    #+#             */
-/*   Updated: 2022/06/06 15:22:10 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/08 13:58:37 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-struct timeval	get_time(void)
+long int	actual_time(void)
 {
-	struct timeval	time;
+	long int			time;
+	struct timeval		current_time;
 
-	gettimeofday(&time, NULL);
+	time = 0;
+	if (gettimeofday(&current_time, NULL) == -1)
+		{
+			printf("Error: gettimeofday\n");
+			return (0);
+		}
+	time = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
 	return (time);
 }
 
-size_t	convert_time_in_ms(struct timeval time)
+void	ft_sleep(long int time_in_ms)
 {
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+	long int	start_time;
+
+	start_time = 0;
+	start_time = actual_time();
+	while ((actual_time() - start_time) < time_in_ms)
+		usleep(time_in_ms / 10);
 }
 
-size_t	get_time_ms_now(void)
+long int convert_time_in_ms_from_start(t_table *table)
 {
-	return (convert_time_in_ms(get_time()));
-}
+	long int	time;
 
-size_t	convert_time_in_ms_from_start(t_table *table)
-{
-	return (get_time_ms_now() - table->start_time);
-}
-
-void	ft_sleep(size_t usec)
-{
-	size_t	current;
-
-	current = get_time_ms_now();
-	while (usec > get_time_ms_now() - current)
-		usleep(usec * 1000);
+	time = actual_time() - table->start_time;
+	return (time);
 }

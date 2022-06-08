@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:11:09 by mea               #+#    #+#             */
-/*   Updated: 2022/06/06 14:25:22 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/08 14:08:34 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,28 @@ void	init_threads(t_table *table, int i)
 	pthread_create(&table->philo[i].thread, NULL, dinner_time, &table->philo[i]);
 }
 
-/*void	init_forks(t_table *table, int i)
-{
-		pthread_mutex_init(table->forks + i, NULL);
-}
-*/
-
 void	init_philo(t_table *table, int i)
 {
-	t_philo *philo;
-
-	philo = table->philo + i;
-	philo->id = i;
-	philo->eating = 0;
-	philo->sleeping = 0;
-	philo->dead = 0;
-	philo->nb_of_meal = 0;
-	philo->last_meal_time = 0;
-	philo->table = table;
+	table->philo[i].id = i + 1;
+	table->philo[i].eating = 0;
+	table->philo[i].sleeping = 0;
+	table->philo[i].dead = 0;
+	table->philo[i].nb_of_meal = 0;
+	table->philo[i].last_meal_time = 0;
+	table->philo[i].table = table;
 	if (i == 0)
-		philo->left_fork = table->forks + (table->nb_of_philo - 1);
+		table->philo[i].left_fork = table->forks + (table->nb_of_philo - 1);
 	else
-		philo->left_fork = table->forks + (i - 1);
-	philo->right_fork = table->forks + i;
+		table->philo[i].left_fork = table->forks + (i - 1);
+	table->philo[i].right_fork = table->forks + i;
 }
 
 void	start_the_party(t_table *table)
 {
 	int		i;
 
+	pthread_mutex_init(&table->is_writing, NULL);
+	pthread_mutex_init(&table->is_dying, NULL);
 	i = 0;
 	while (i < table->nb_of_philo)
 		pthread_mutex_init(table->forks + (i++), NULL);
@@ -56,6 +49,12 @@ void	start_the_party(t_table *table)
 	while (i < table->nb_of_philo)
 	{
 		pthread_create(&table->philo[i].thread, NULL, dinner_time, &table->philo[i]);
+		i++;
+	}
+	i = 0;
+	while (i < table->nb_of_philo)
+	{
+		pthread_join(table->philo[i].thread, NULL);
 		i++;
 	}
 	//philo_check_death(table);

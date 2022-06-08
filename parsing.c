@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:11:59 by mea               #+#    #+#             */
-/*   Updated: 2022/06/06 14:18:21 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/08 13:42:02 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void parsing(int argc, char **argv, t_table *table)
 	if (table->forks == NULL)
 		return ;
 	table->death = 0;
-	table->start_time = get_time_ms_now();
-	pthread_mutex_init(&table->is_dying, NULL);
-	pthread_mutex_init(&table->is_writing, NULL);
+	table->start_time = actual_time();
 }
 

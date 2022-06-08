@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:20:28 by mea               #+#    #+#             */
-/*   Updated: 2022/06/06 15:23:10 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/08 13:59:05 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,9 @@ typedef struct s_table
 
 //time.c
 
-struct timeval	get_time_now(void);
-size_t	convert_time_in_ms(struct timeval time);
-size_t	get_time_ms_now(void);
-size_t	convert_time_in_ms_from_start(t_table *table);
-void	ft_sleep(size_t	usec);
+long int	actual_time(void);
+long int	convert_time_in_ms_from_start(t_table *table);
+void		ft_sleep(long int time);
 
 //utils.c
 int		ft_atoi(const char *str);
@@ -73,7 +71,7 @@ int		philo_check_eat(t_table *table);
 
 //dinner.c
 
-void	ft_sleep(size_t time);
+void	ft_sleep(long int time);
 void	*dinner_time(void *data);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);

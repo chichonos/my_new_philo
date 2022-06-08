@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:15:18 by mea               #+#    #+#             */
-/*   Updated: 2022/06/06 13:15:58 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/08 13:58:25 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ int	ft_atoi(const char *str)
 
 void	print_action(long int time, t_philo *philo, char *msg)
 {
+	pthread_mutex_lock(&philo->table->is_writing);
 	if (philo->table->death == 0)
 		printf("%zu ms: Philosopher %d %s\n", time, philo->id, msg);
+	pthread_mutex_unlock(&philo->table->is_writing);
 }
 
 int		philo_check_eat(t_table *table)
@@ -73,7 +75,7 @@ void	philo_check_death(t_table *table)
 			if (table->philo[i].eating == 1)
 				continue ;
 			pthread_mutex_lock(&table->is_dying);
-			if (get_time_ms_now() - \
+			if (actual_time() - \
 			table->philo[i].last_meal_time >= table->time_to_die)
 			{
 				print_action(convert_time_in_ms_from_start(table), table->philo + i, "is dead\n");
