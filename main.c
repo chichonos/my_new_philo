@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 13:58:39 by mea               #+#    #+#             */
-/*   Updated: 2022/06/13 14:45:24 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/13 16:43:57 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void	end_of_the_party(t_table *table)
 	}
 	pthread_mutex_destroy(&table->is_writing);
 	pthread_mutex_destroy(&table->is_dying);
+	free(table->philo);
+	free(table->forks);
+	free(table);
 }
 
 
