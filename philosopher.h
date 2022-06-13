@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:20:28 by mea               #+#    #+#             */
-/*   Updated: 2022/06/08 14:25:19 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/13 14:35:57 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	sleeping(t_philo *philo);
 void	thinking(t_philo *philo);
 
 //parsing.c
-void parsing(int argc, char **argv, t_table *table);
+void	parsing(int argc, char **argv, t_table *table);
 
 //main.c
 void	start_the_party(t_table *table);
