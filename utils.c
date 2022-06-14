@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:15:18 by mea               #+#    #+#             */
-/*   Updated: 2022/06/13 14:35:42 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/14 11:41:03 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ int	ft_atoi(const char *str)
 	return (num * neg);
 }
 
-void	print_action(long int time, t_philo *philo, char *msg)
+void	print_action(int time, t_philo *philo, char *msg)
 {
 	pthread_mutex_lock(&philo->table->is_writing);
 	if (philo->table->death == 0)
-		printf("%zu ms: Philosopher %d %s\n", time, philo->id, msg);
+		printf("%d ms: Philosopher %d %s\n", time, philo->id, msg);
 	pthread_mutex_unlock(&philo->table->is_writing);
 }
 
@@ -73,15 +73,13 @@ void	death_checker(t_table *table)
 		pthread_mutex_lock(&table->is_dying);
 		if ((actual_time() - table->philo[i].last_meal_time) >= table->time_to_die)
 		{
-			print_action(convert_time_in_ms_from_start(table), table->philo + i, "is dead\n");
+			printf("Last meal time : %d\n", table->philo[i].last_meal_time);
+			print_action(actual_time(), table->philo + i, "is dead\n");
 			table->death = 1;
+			pthread_mutex_unlock(&table->is_dying);
 			return ;
 		}
 		pthread_mutex_unlock(&table->is_dying);
 	}
-	if (meal_checker(table))
-		return ;
-	else
-		table->death = 1;
 	return;
 }

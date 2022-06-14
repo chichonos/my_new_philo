@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:20:28 by mea               #+#    #+#             */
-/*   Updated: 2022/06/13 14:35:57 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/14 11:41:40 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_philo
 	int 			sleeping;
 	int				dead;
 	int				nb_of_meal;
-	long int 		last_meal_time;
+	int 		last_meal_time;
 	pthread_t 		thread;
 	pthread_mutex_t *left_fork;
 	pthread_mutex_t *right_fork;
@@ -37,9 +37,9 @@ typedef struct s_philo
 typedef struct s_table
 {
 	int				nb_of_philo;
-   	long int		time_to_die;
-	long int		time_to_eat;
-	long int 		time_to_sleep;
+   	int		time_to_die;
+	int		time_to_eat;
+	int 		time_to_sleep;
 	int				nb_of_meal_min;
 	int				death;
 	t_philo 		*philo;
@@ -54,13 +54,13 @@ typedef struct s_table
 
 //time.c
 
-long int	actual_time(void);
-long int	convert_time_in_ms_from_start(t_table *table);
+int	actual_time(void);
+//long int	convert_time_in_ms_from_start(t_table *table);
 void		ft_sleep(long int time);
 
 //utils.c
 int		ft_atoi(const char *str);
-void	print_action(long int time, t_philo *philo, char *msg);
+void	print_action(int time, t_philo *philo, char *msg);
 
 //init.c
 void	init_threads(t_table *table, int i);
