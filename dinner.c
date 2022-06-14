@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:12:41 by mea               #+#    #+#             */
-/*   Updated: 2022/06/14 15:12:38 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/14 15:50:41 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,10 @@ void	eating(t_philo	*philo)
 			pthread_mutex_unlock(philo->right_fork);
 			return ;
 		}
-		//philo->eating = 1;
 		print_action(actual_time(), philo, "is eating\n");
 		ft_sleep(philo->table->time_to_eat);
 		philo->last_meal_time = actual_time();
 		philo->nb_of_meal++;
-		//philo->eating = 0;
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
 		death_checker(philo->table);
