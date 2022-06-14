@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:15:18 by mea               #+#    #+#             */
-/*   Updated: 2022/06/14 15:15:44 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/14 15:25:36 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	print_action(int time, t_philo *philo, char *msg)
 int	meal_checker(t_table *table)
 {
 	int			i;
-	static int	finish_eating = 0;
+	int	finish_eating = 0;
 
 	if (table->nb_of_meal_min < 0)
 		return (0);
@@ -64,7 +64,8 @@ int	meal_checker(t_table *table)
 	}
 	if (finish_eating == table->nb_of_philo)
 		return (1);
-	return (0);
+	else
+		return (0);
 }
 
 void	death_checker(t_table *table)
