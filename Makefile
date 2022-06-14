@@ -1,11 +1,13 @@
 NAME = philo
 SRCS = main.c init.c dinner.c parsing.c time.c utils.c
 OBJS = $(SRCS:.c=.o)
-FLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 DEBUG = -g -fsanitize=address
 
 $(NAME): $(OBJS)
-	gcc $(FLAGS) $(OBJS) $(DEBUG) -o $(NAME)
+	gcc $(CFLAGS) $(OBJS) $(DEBUG) -o $(NAME)
+
+
 
 all: $(NAME)
 

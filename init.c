@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:11:09 by mea               #+#    #+#             */
-/*   Updated: 2022/06/14 10:09:12 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/14 15:02:52 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	init_threads(t_table *table, int i)
 {
-	pthread_create(&table->philo[i].thread, NULL, dinner_time, &table->philo[i]);
+	pthread_create(&table->philo[i].thread, NULL, dinner_time, \
+	&table->philo[i]);
 }
 
 void	init_philo(t_table *table, int i)
@@ -45,17 +46,17 @@ void	start_the_party(t_table *table)
 	i = 0;
 	while (i < table->nb_of_philo)
 		init_philo(table, i++);
-	i = 0;
-	while (i < table->nb_of_philo)
+	if (table->nb_of_philo == 1)
 	{
-		pthread_create(&table->philo[i].thread, NULL, dinner_time, &table->philo[i]);
-		i++;
+		print_action(actual_time(), &table->philo[0], "is dead\n");
+		return ;
 	}
-	i = 0;
-	while (i < table->nb_of_philo)
-	{
+	i = -1;
+	while (++i < table->nb_of_philo)
+		pthread_create(&table->philo[i].thread, NULL, dinner_time, \
+		&table->philo[i]);
+	i = -1;
+	while (++i < table->nb_of_philo)
 		pthread_join(table->philo[i].thread, NULL);
-		i++;
-	}
 	return ;
 }

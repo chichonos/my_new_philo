@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:15:18 by mea               #+#    #+#             */
-/*   Updated: 2022/06/14 11:41:03 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/14 15:15:44 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,15 @@ void	print_action(int time, t_philo *philo, char *msg)
 {
 	pthread_mutex_lock(&philo->table->is_writing);
 	if (philo->table->death == 0)
-		printf("%d ms: Philosopher %d %s\n", time, philo->id, msg);
+		printf("%d %d %s", time, philo->id, msg);
+		//printf("%d ms: Philosopher %d %s", time, philo->id, msg);
 	pthread_mutex_unlock(&philo->table->is_writing);
 }
 
-int		meal_checker(t_table *table)
+int	meal_checker(t_table *table)
 {
-	int	i;
+	int			i;
+	static int	finish_eating = 0;
 
 	if (table->nb_of_meal_min < 0)
 		return (0);
@@ -57,23 +59,28 @@ int		meal_checker(t_table *table)
 	{
 		if (table->philo[i].nb_of_meal < table->nb_of_meal_min)
 			return (0);
+		else
+			finish_eating += 1;
 	}
-	return (1);
+	if (finish_eating == table->nb_of_philo)
+		return (1);
+	return (0);
 }
 
 void	death_checker(t_table *table)
 {
-	size_t	i;
-	
+	int	i;
+
 	i = -1;
 	while (++i < table->nb_of_philo)
 	{
-		if (table->philo[i].eating == 1)
+		/*if (table->philo[i].eating == 1)
 			continue ;
+		*/
 		pthread_mutex_lock(&table->is_dying);
-		if ((actual_time() - table->philo[i].last_meal_time) >= table->time_to_die)
+		if ((actual_time() - table->philo[i].last_meal_time) \
+		>= table->time_to_die)
 		{
-			printf("Last meal time : %d\n", table->philo[i].last_meal_time);
 			print_action(actual_time(), table->philo + i, "is dead\n");
 			table->death = 1;
 			pthread_mutex_unlock(&table->is_dying);
@@ -81,5 +88,7 @@ void	death_checker(t_table *table)
 		}
 		pthread_mutex_unlock(&table->is_dying);
 	}
-	return;
+	if (meal_checker(table))
+		table->stop = 1;
+	return ;
 }

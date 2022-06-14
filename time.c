@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:20:04 by mea               #+#    #+#             */
-/*   Updated: 2022/06/14 11:38:53 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/14 14:55:09 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int	actual_time(void)
 {
-	int			time;
+	int					time;
 	struct timeval		current_time;
-	static int 			start_time;
-
+	static int			start_time;
 
 	if (gettimeofday(&current_time, NULL) == -1)
 	{
@@ -25,7 +24,7 @@ int	actual_time(void)
 		return (0);
 	}
 	time = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
-	if(!start_time)
+	if (!start_time)
 		start_time = time;
 	return (time - start_time);
 }
