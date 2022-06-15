@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:15:18 by mea               #+#    #+#             */
-/*   Updated: 2022/06/14 15:50:06 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/15 09:20:14 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ void	print_action(int time, t_philo *philo, char *msg)
 int	meal_checker(t_table *table)
 {
 	int			i;
-	int	finish_eating = 0;
+	int			finish_eating;
 
+	finish_eating = 0;
 	if (table->nb_of_meal_min < 0)
 		return (0);
 	i = -1;

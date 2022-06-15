@@ -10,22 +10,24 @@ GREEN			:=	"\033[1;32m"
 PURPLE			:=	"\033[1;35m"
 BLUE			:=	"\033[1;36m"
 WHITE			:=	"\033[1;37m"
-EOC				:=	"\033[0;0m"
+END				:=	"\033[0;0m"
 
 $(NAME): $(OBJS)
-	gcc $(CFLAGS) $(OBJS) $(DEBUG) -o $(NAME)
-	@echo $(GREEN) "Compiled." $(EOC)
+	@gcc $(CFLAGS) $(OBJS) $(DEBUG) -o $(NAME)
+	@echo $(GREEN) "Compiled." $(END)
+
+
 
 all: $(NAME)
 
 clean:
-	-@rm -rf $(OBJS) 2>/dev/null || true
-	@echo $(GREEN) "Cleaned all *.o files." $(EOC)
+	@rm -rf $(OBJS)
+	@echo $(GREEN) "Cleaned all *.o files." $(END)
 
 fclean:
-	rm -f $(NAME) $(OBJS)
-	@echo $(PURPLE) "Cleaned.\n" $(EOC)
+	@rm -rf $(NAME) $(OBJS)
+	@echo $(GREEN) "Everything is fine, ready to MAKE.\n" $(END)
 	
 re: fclean all
 
-.PHONY: all fclean re
+.PHONY: all fclean re clean
