@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 15:20:04 by mea               #+#    #+#             */
-/*   Updated: 2022/06/28 09:53:50 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/28 11:38:49 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_sleep(long int time_in_ms)
 		usleep(time_in_ms / 10);
 }
 
-int		philo_sleep(t_philo *philo, long int time_in_ms)
+int	philo_sleep(t_philo *philo, long int time_in_ms)
 {
 	time_t	start;
 	time_t	end;
