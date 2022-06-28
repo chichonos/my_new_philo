@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 14:20:28 by mea               #+#    #+#             */
-/*   Updated: 2022/06/28 09:46:40 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/28 11:27:55 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_table
 	int				nb_of_meal_min;
 	int				stop;
 	int				death;
+	int				all_ate;
 	t_philo			*philo;
 	size_t			start_time;
 	pthread_mutex_t	is_writing;
@@ -67,7 +68,7 @@ void		init_threads(t_table *table, int i);
 void		init_forks(t_table *table, int i);
 void		init_philo(t_table *table, int i);
 int			death_checker(t_philo *philo);
-int			meal_checker(t_philo *philo);
+void		meal_checker(t_philo *philo);
 
 //dinner.c
 void		*dinner_time(void *data);

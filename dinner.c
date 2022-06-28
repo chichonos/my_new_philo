@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:12:41 by mea               #+#    #+#             */
-/*   Updated: 2022/06/28 11:13:52 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/28 11:33:37 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	*dinner_time(void *data)
 	while (philo->table->death == 0 && philo->table->stop == 0)
 	{
 		eating(philo);
+		meal_checker(philo);
 		sleeping(philo);
 		thinking(philo);
 	}

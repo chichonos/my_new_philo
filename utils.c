@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:15:18 by mea               #+#    #+#             */
-/*   Updated: 2022/06/28 09:35:19 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/28 11:26:24 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,21 @@ void	print_action(int time, t_philo *philo, char *msg)
 	pthread_mutex_unlock(&philo->table->is_writing);
 }
 
-int	meal_checker(t_philo *philo)
-{
-	int			i;
-	int			finish_eating;
-
-	finish_eating = 0;
-	if (philo->table->nb_of_meal_min < 0)
-		return (1);
-	i = -1;
+void	meal_checker(t_philo *philo)
+{	
 	if (philo->nb_of_meal < philo->table->nb_of_meal_min)
-			return (0);
-	else if (philo->nb_of_meal >= philo->table->nb_of_meal_min)
-		return (1);
-	else
-		return (0);
+			return;
+	
+	if (philo->nb_of_meal == philo->table->nb_of_meal_min)
+			philo->table->all_ate++;
+	if (philo->table->all_ate == philo->table->nb_of_meal_min)
+	{
+		pthread_mutex_lock(&philo->table->is_dying);
+		philo->table->stop = 1;
+		pthread_mutex_unlock(&philo->table->is_dying);
+		return;
+	}
+	return;
 }
 
 int	death_checker(t_philo *philo)

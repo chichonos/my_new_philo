@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:11:59 by mea               #+#    #+#             */
-/*   Updated: 2022/06/14 15:00:21 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/28 11:28:34 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	parsing(int argc, char **argv, t_table *table)
 		return (1);
 	table->death = 0;
 	table->stop = 0;
+	table->all_ate = 0;
 	table->start_time = actual_time();
 	return (0);
 }
