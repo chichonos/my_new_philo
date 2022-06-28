@@ -16,8 +16,6 @@ $(NAME): $(OBJS)
 	@gcc $(CFLAGS) $(OBJS) $(DEBUG) -o $(NAME)
 	@echo $(GREEN) "Compiled." $(END)
 
-
-
 all: $(NAME)
 
 clean:

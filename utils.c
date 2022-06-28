@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:15:18 by mea               #+#    #+#             */
-/*   Updated: 2022/06/15 09:20:14 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/28 09:35:19 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,47 +46,33 @@ void	print_action(int time, t_philo *philo, char *msg)
 	pthread_mutex_unlock(&philo->table->is_writing);
 }
 
-int	meal_checker(t_table *table)
+int	meal_checker(t_philo *philo)
 {
 	int			i;
 	int			finish_eating;
 
 	finish_eating = 0;
-	if (table->nb_of_meal_min < 0)
-		return (0);
+	if (philo->table->nb_of_meal_min < 0)
+		return (1);
 	i = -1;
-	while (++i < table->nb_of_philo)
-	{
-		if (table->philo[i].nb_of_meal < table->nb_of_meal_min)
+	if (philo->nb_of_meal < philo->table->nb_of_meal_min)
 			return (0);
-		else
-			finish_eating += 1;
-	}
-	if (finish_eating == table->nb_of_philo)
+	else if (philo->nb_of_meal >= philo->table->nb_of_meal_min)
 		return (1);
 	else
 		return (0);
 }
 
-void	death_checker(t_table *table)
+int	death_checker(t_philo *philo)
 {
-	int	i;
-
-	i = -1;
-	while (++i < table->nb_of_philo)
+	if ((actual_time() - philo->last_meal_time) \
+	>= philo->table->time_to_die)
 	{
-		pthread_mutex_lock(&table->is_dying);
-		if ((actual_time() - table->philo[i].last_meal_time) \
-		>= table->time_to_die)
-		{
-			print_action(actual_time(), table->philo + i, "is dead\n");
-			table->death = 1;
-			pthread_mutex_unlock(&table->is_dying);
-			return ;
-		}
-		pthread_mutex_unlock(&table->is_dying);
+		pthread_mutex_lock(&philo->table->is_dying);
+		print_action(actual_time(), philo, "died\n");
+		philo->table->death = 1;
+		pthread_mutex_unlock(&philo->table->is_dying);
+		return (1);
 	}
-	if (meal_checker(table))
-		table->stop = 1;
-	return ;
+	return (0);
 }

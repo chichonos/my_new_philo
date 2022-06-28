@@ -6,7 +6,7 @@
 /*   By: mea <mea@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:11:09 by mea               #+#    #+#             */
-/*   Updated: 2022/06/14 15:02:52 by mea              ###   ########.fr       */
+/*   Updated: 2022/06/27 13:45:44 by mea              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	start_the_party(t_table *table)
 		init_philo(table, i++);
 	if (table->nb_of_philo == 1)
 	{
-		print_action(actual_time(), &table->philo[0], "is dead\n");
+		print_action(actual_time(), &table->philo[0], "died");
 		return ;
 	}
 	i = -1;
