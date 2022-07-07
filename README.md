@@ -22,13 +22,14 @@ Un philosophe n'a que trois états possibles :
 
 Des contraintes extérieures s'imposent à cette situation :
 
-Lorsqu'un philosophe a faim, il va se mettre dans l'état « affamé » et attendre que les fourchettes soient libres ;
-Pour manger, un philosophe a besoin de deux fourchettes : celle qui se trouve à gauche de sa propre assiette,
+- Lorsqu'un philosophe a faim, il va se mettre dans l'état « affamé » et attendre que les fourchettes soient libres
+- Pour manger, un philosophe a besoin de deux fourchettes : celle qui se trouve à gauche de sa propre assiette,
 et celle qui se trouve à droite (c'est-à-dire les deux fourchettes qui entourent sa propre assiette) ;
-si un philosophe n'arrive pas à s'emparer d'une fourchette, il reste affamé pendant un temps déterminé, en attendant de renouveler sa tentative.
+- Si un philosophe n'arrive pas à s'emparer d'une fourchette, il reste affamé pendant un temps déterminé, en attendant de renouveler sa tentative.
+
 Le problème consiste à trouver un ordonnancement des philosophes tel qu'ils puissent tous manger, chacun à leur tour.
 Si un philosophe n'a pas ses deux fourchettes à temps pour manger alors il meurt et le programme prend fin.
 
-Pour lancer le programme : lancer la commande "make" dans le terminal (une fois dans le bon dossier).
-Puis mettez des arguments sous ce format : ./philo nb_de_philosophers temps_pour_mourir temps_pour_manger temps_pour_dormir nb_de_repas_minimum
-Ce qui donne par exemple : ./philo 5 200 80 80 7
+- Pour lancer le programme : lancer la commande "make" dans le terminal (une fois dans le bon dossier).
+- Puis mettez des arguments sous ce format : ./philo nb_de_philosophers temps_pour_mourir temps_pour_manger temps_pour_dormir nb_de_repas_minimum
+- Ce qui donne par exemple : ./philo 5 200 80 80 7
